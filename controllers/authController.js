@@ -2,6 +2,7 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const config  = require('../config/config');
+const verifyToken = require('./verificarToke');
 
 
 exports.signup = async (req, res, next)=>{
@@ -48,25 +49,21 @@ exports.signin = async (req, res, next)=>{
 
 
 exports.me = async (req, res, next) =>{
-    //leemos el token en la cabezera y verificamos so ese token existe
+   
 
-    const token= req.headers['x-access-token']
-    //si el token existe dara pasada sino dara un mensaje
-    if(!token){
-        return res.status(401).json({
-            auth:false,
-            message: 'no token provaided'
-        })
-    }
-     const decoded = jwt.verify(token, config.secret);
-     //extramoe la informacion de el user
-
-     const user = await User.findById(decoded.id, {password: 0});
+     const user = await User.findById(req.userID, {password: 0});
      if (!user) {
         return res.status(404).send('No user found');
      }
      
     res.json(user);
-    
+}
 
+exports.pruebaToken = async(req, res, next)=>{
+    
+    const user = await User.findById(req.userID, {password:0});
+    if(!user){
+        return res.status(404).send('No user found');
+    }
+    res.json(user)
 }

@@ -4,7 +4,7 @@ const router = express.Router();
 
 //llamamos al controlador
 const authController = require('../controllers/authController.js');
-
+const verifyToken = require('../controllers/verificarToke');
 
 module.exports = function() {
 
@@ -23,9 +23,13 @@ module.exports = function() {
       );
      
 
-     router.get('/me',
+     router.get('/me', verifyToken,
      authController.me
-     )
+     );
+
+     router.get('/prueba', verifyToken,
+        authController.pruebaToken 
+    )
      
 
     return router;//necesitamos que este disponible todas nuestras rutas
