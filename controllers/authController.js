@@ -2,8 +2,6 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const config  = require('../config/config');
-const verifyToken = require('./verificarToke');
-
 
 exports.signup = async (req, res, next)=>{
 //crear objeto de paciente con datos con req.body
