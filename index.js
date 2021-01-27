@@ -1,12 +1,18 @@
+const dotenv = require("dotenv");
+//Para la configuracion del .env
+dotenv.config();
 const express = require('express');
 const routes = require('./routes/')
-//importamos la base de datos
-require('./database/database');
-//importamos bodyparse
+
+// importamos la base de datos
+require ( './database/database' ) ;
 const bodyParser = require('body-parser') 
+
+
 
 //creamos el servior
 const app = express();
+
 
 
 
@@ -18,10 +24,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use('/', routes())
 
 
-//puerto y arrancamos el servidor
-const host =  '0.0.0.0';
-const port =  4000;
 
-app.listen(port, host, ()=>{
-    console.log(`El servidor esta funcionando en el puerto ${port}`);
+//puerto y arrancamos el servidor
+
+app.listen(process.env.PORT? process.env.PORT : "3000",()=>{
+    console.log('Servidor funcionando');
 })
+
